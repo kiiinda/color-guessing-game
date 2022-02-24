@@ -12,7 +12,7 @@ let selectedLevelButton = levels.find((level) => {
 
 let gameLevel = selectedLevelButton.innerHTML;
 
-const squares = getSquares();
+let squares = getSquares();
 
 levels.forEach((level) => {
     level.addEventListener("click", function() {
@@ -21,6 +21,7 @@ levels.forEach((level) => {
         
         gameLevel = this.innerHTML;
         setTitleAccordingToGameLevel(gameLevel)
+        squares = getSquares()
       
 });
 });
@@ -28,10 +29,10 @@ levels.forEach((level) => {
 function getSquares(){
   const allSquares = Array.from(document.getElementsByClassName("square"));
   if(gameLevel == 'Easy'){
-    return allSquares.slice(0,3)
+    return allSquares.slice(0,3)//set 3 squares on the screen
   }
   else{
-    return allSquares
+    return allSquares//set 6 squares
   }
 }
 
@@ -70,7 +71,7 @@ startButton.addEventListener("click", function (){
   }
 
 //Assign header a random rgb value from one of the square values
-const randomSquareNumber = Math.floor(Math.random() * 6)   
+const randomSquareNumber = Math.floor(Math.random() * squares.length)   
 const headerSquareColor = squares[randomSquareNumber]
 
 setHeaderRgbColor(headerSquareColor)
@@ -120,9 +121,10 @@ squares.forEach(square =>{
       const [r, g,b] = JSON.parse(headerRgbString)
       const rgbString = `rgb(${r}, ${g}, ${b})`
 
-      squares.forEach(sq =>{
-        sq.classList.remove("hidden") 
-        sq.style.backgroundColor = rgbString
+      squares.forEach(square =>{
+        square.classList.remove("hidden") 
+        square.style.backgroundColor = rgbString
+        square.dataset.rgb_value = colorDisplayElement.dataset.rgb_value
       })
     }
   })
